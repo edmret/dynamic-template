@@ -6,10 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Request,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { TemplateDto } from 'src/dto/template.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -18,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('Template')
+@ApiBearerAuth('access-token')
 @Controller('templates')
 export class TemplatesController {
   constructor(private templateService: TemplatesService) {}
@@ -36,8 +39,11 @@ export class TemplatesController {
     description: 'The JSON of the template to create',
   })
   @Post()
-  async createTemplate(data: TemplateDto) {
-    return this.templateService.createTemplate(data);
+  async createTemplate(@Request() req) {
+    return this.templateService.createTemplate({
+      ...req.body,
+      creator: req.user.userId,
+    });
   }
 
   @ApiOperation({
@@ -47,7 +53,7 @@ export class TemplatesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'All templates',
-    type: [TemplateDto],
+    type: TemplateDto,
     isArray: true,
   })
   @Get()
@@ -112,7 +118,8 @@ export class TemplatesController {
     type: 'string',
   })
   @Put(':id')
-  async updateTemplateById(@Param('id') id: string, data: TemplateDto) {
-    return this.templateService.updateTemplateById(id, data);
+  async updateTemplateById(@Param('id') id: string, @Request() req) {
+    console.log(req.body);
+    return this.templateService.updateTemplateById(id, req.body);
   }
 }

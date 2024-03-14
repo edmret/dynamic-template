@@ -25,6 +25,9 @@ export class TemplatesService {
 
   // update template by id
   async updateTemplateById(id: string, data: any) {
-    return this.templateRepository.updateTemplateById(id, data);
+    return this.templateRepository.updateTemplateById(id, {
+      name: data.name,
+      structure: data.structure,
+    });
   }
 }

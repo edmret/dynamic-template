@@ -17,6 +17,7 @@ export class AuthService {
     pass: string,
   ): Promise<Omit<User, 'password'>> {
     const user = await this.usersService.findOne(username);
+
     const isSamePassword = await this.hashService.compare(
       pass,
       user?.password ?? '',
@@ -30,8 +31,8 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      username: user.username,
-      sub: user._id,
+      username: user._doc.username,
+      sub: user._doc._id.toString(),
     };
     return {
       access_token: this.jwtService.sign(payload),

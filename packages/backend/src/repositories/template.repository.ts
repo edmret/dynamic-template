@@ -30,17 +30,6 @@ export class TemplateRepository {
 
   // update template by id
   async updateTemplateById(id: string, data: any): Promise<Template> {
-    const response = await this.templateModel.aggregate([
-      {
-        $match: {
-          _id: id,
-        },
-      },
-      {
-        $set: data,
-      },
-    ]);
-
-    return response[0];
+    return this.templateModel.findByIdAndUpdate(id, data, { new: true }).exec();
   }
 }

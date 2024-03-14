@@ -1,8 +1,8 @@
 "use client";
-import { useTemplates } from "@/hooks/templateHooks";
 import {
   Button,
   Divider,
+  Grid,
   List,
   ListItem,
   ListItemText,
@@ -11,31 +11,39 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-// Inside your component
-// const { t } = useTranslation();
-
-// In your JSX
-{
-  /* <ListItemText primary={t(text)} /> */
+interface TemplatesListProps {
+  handleTemplateClick: (template: any) => void;
+  handleAddTemplate: () => void;
+  selectedTemplateId?: string;
+  templates?: any[];
+  loading?: boolean;
 }
-// You can change the language by calling i18n.changeLanguage('es') for example.
 
-const TemplatesList = () => {
+const TemplatesList = ({
+  handleTemplateClick,
+  handleAddTemplate,
+  selectedTemplateId,
+  templates = [],
+  loading,
+}: TemplatesListProps) => {
   const { t } = useTranslation();
-  const { loading, templates } = useTemplates();
 
-  const handleTemplateClick = (templateId: string) => {
-    // Handle list item click event here
-    console.log(`Clicked item ${templateId}`);
-  };
-
-  const handleAddTemplate = () => {};
   return (
     <Paper elevation={0} sx={{ p: 2 }}>
-      <Typography variant="h6" component="div">
-        {t("List of Templates")}
-      </Typography>
-      <Divider />
+      <Grid container justifyContent="space-between">
+        <Typography variant="h6" component="div">
+          {t("List of Templates")}
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddTemplate}
+          aria-label="Add Template"
+        >
+          +
+        </Button>
+      </Grid>
+      <Divider sx={{ my: 2 }} />
       {!loading && !!templates.length && (
         <List
           component="nav"
@@ -48,9 +56,13 @@ const TemplatesList = () => {
           {templates.map((template, index, arr) => (
             <ListItem
               button
-              key={template.id}
-              onClick={() => handleTemplateClick(template.id)}
+              key={template._id}
+              onClick={() => handleTemplateClick(template)}
               sx={{
+                bgcolor:
+                  template._id === selectedTemplateId
+                    ? "secondary.light"
+                    : "primary.light",
                 borderBottom:
                   index !== arr.length - 1 ? "1px solid divider" : "none",
               }}

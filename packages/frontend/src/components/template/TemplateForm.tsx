@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 
 interface FormValues {
   name: string;
@@ -12,11 +12,15 @@ interface FormValues {
 interface TemplateFormProps {
   initialValues: FormValues;
   title: string;
+  isNew?: boolean;
+  onSubmit: (values: FormValues) => void;
 }
 
 const TemplateForm: React.FC<TemplateFormProps> = ({
   initialValues,
   title,
+  isNew = false,
+  onSubmit,
 }) => {
   const { t } = useTranslation();
 
@@ -29,14 +33,27 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        // Handle form submission here
-        console.log(values);
+      onSubmit={async (values, { setSubmitting }) => {
+        const structure = JSON.parse(values.structure);
+        await onSubmit({
+          ...values,
+          structure,
+        });
         setSubmitting(false);
       }}
     >
       {({ isSubmitting, handleChange, values, errors, touched }) => (
         <Form>
+          <Typography
+            variant="h5"
+            sx={{
+              my: 3,
+              mx: 2,
+            }}
+          >
+            {title}
+          </Typography>
+          <Divider />
           <Box
             display="flex"
             flexDirection="column"
@@ -72,7 +89,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
               variant="contained"
               color="primary"
             >
-              {t("Save")}
+              {isNew ? t("Create template") : t("Save changes")}
             </Button>
           </Box>
         </Form>
