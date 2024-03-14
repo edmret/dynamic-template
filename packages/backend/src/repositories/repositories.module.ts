@@ -6,6 +6,7 @@ import { databaseConfig } from 'src/config/database.config';
 import { UserSchema } from 'src/schema/user.schema';
 import { TemplateSchema } from 'src/schema/template.schema';
 import { DocSchema } from 'src/schema/Doc.schema';
+import { TemplateRepository } from './template.repository';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { DocSchema } from 'src/schema/Doc.schema';
     ]),
     MongooseModule.forRootAsync(databaseConfig),
   ],
-  providers: [UsersRepository],
-  exports: [UsersRepository],
+  providers: [UsersRepository, TemplateRepository],
+  exports: [UsersRepository, TemplateRepository],
 })
 export class RepositoriesModule {}

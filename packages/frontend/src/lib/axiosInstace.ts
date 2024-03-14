@@ -1,12 +1,15 @@
+"use client";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const { data } = (await getSession()) as any;
-  if (data && data.token.accessToken) {
-    config.headers.Authorization = `Bearer ${data.token.accessToken}`;
+  // set base route
+  config.baseURL = process.env.NEXT_PUBLIC_API_URL;
+  const { token } = (await getSession()) as any;
+  if (token?.accessToken) {
+    config.headers.Authorization = `Bearer ${token.accessToken}`;
   }
   return config;
 });

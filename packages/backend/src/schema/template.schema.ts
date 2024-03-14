@@ -9,6 +9,9 @@ export class Template {
   structure: any;
 
   @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
   creator: string;
 }
 
