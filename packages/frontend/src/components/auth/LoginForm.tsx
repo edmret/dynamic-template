@@ -8,6 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { signIn } from "next-auth/react";
 
 import * as Yup from "yup";
 
@@ -22,16 +24,32 @@ const schema = Yup.object({
 });
 
 const LoginForm = () => {
+  const handleLogin = async (
+    { username, password }: any,
+    { setSubmitting }: any
+  ) => {
+    try {
+      setSubmitting(true);
+      const response = await axios.post("http://localhost:3001/auth/login", {
+        username,
+        password,
+      });
+      setSubmitting(false);
+
+      const token = response.data.access_token;
+
+      // Sign in with the token
+      signIn("credentials", { callbackUrl: "/", token });
+    } catch (error) {
+      console.error("Login failed");
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
+      onSubmit={handleLogin}
     >
       {({
         submitForm,
@@ -43,10 +61,7 @@ const LoginForm = () => {
       }) => (
         <Form>
           <Typography variant="h4" sx={{ marginY: 3 }}>
-            Register
-          </Typography>
-          <Typography variant="body1" sx={{ marginY: 3 }}>
-            Please enter your username and password to register.
+            Login
           </Typography>
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField

@@ -1,3 +1,4 @@
+import { NextAuthProvider } from "@/components/auth/NextAuthProvider";
 import { Container } from "@mui/material";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Container>{children}</Container>
+        <NextAuthProvider>
+          <Container>{children}</Container>
+        </NextAuthProvider>
       </body>
     </html>
   );
