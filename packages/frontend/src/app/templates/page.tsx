@@ -7,10 +7,10 @@ import { useTemplates } from "@/hooks/templateHooks";
 import withAuth from "@/lib/withAuth";
 import { Template } from "@/types/template.types";
 import { Box, Divider, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const TemplatePage = () => {
+const TemplatePage: FC<any> = () => {
   const { t } = useTranslation();
   const [currentTemplate, setCurrentTemplate] = useState<any>(null);
   const { loading, templates, fetchTemplates } = useTemplates();
