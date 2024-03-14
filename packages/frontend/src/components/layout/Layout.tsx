@@ -8,13 +8,13 @@ import { getQueryStringValue } from "@/utils/query.utils";
 
 // function to get the query string value from the url
 
-//e.g. ?lng=en
-const search = document.location.search;
-// extract de lang from query string
-const lang = getQueryStringValue("lng", search);
+// //e.g. ?lng=en
+// const search = document?.location?.search ?? "";
+// // extract de lang from query string
+// const lang = getQueryStringValue("lng", search);
 i18n.use(initReactI18next).init({
   resources: translations,
-  lng: lang ?? "en",
+  lng: "en",
   interpolation: {
     escapeValue: false,
   },
