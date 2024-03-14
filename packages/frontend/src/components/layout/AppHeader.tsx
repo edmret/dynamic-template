@@ -41,7 +41,7 @@ function AppHeader() {
             textDecoration: "none",
           }}
         >
-          Dynamic Renderer
+          Dynamic Layout
         </Typography>
 
         <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -73,7 +73,7 @@ function AppHeader() {
             textDecoration: "none",
           }}
         >
-          Notification
+          Dynamic Layout
         </Typography>
       </Toolbar>
     </AppBar>
