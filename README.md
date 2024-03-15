@@ -46,7 +46,13 @@ Note: There is no screen for creating a user in the UI, but it is doable by the 
 
 ## Known Issues
 
-If you want to rebuild the application, you need to remove the created `mongo-data` folder with admin permissions.
+- Next Auth Documentation is poor for integration with Next 13, so the authentication is not working always good, it some issue happens please refresh de application.
+
+- running the project on production mode may cause some issues with the frontend just in docker so the dockerfile is running the project in development mode, cause of that the application is running slower than it should.
+
+- The first time running the application, may take a while to start the frontend.
+
+- If you want to rebuild the application, you need to remove the created `mongo-data` folder with admin permissions.
 
 ## Configuration Interfaces
 

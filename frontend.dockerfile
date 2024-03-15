@@ -15,4 +15,4 @@ WORKDIR /app/packages/frontend
 RUN npm ci
 RUN npm run build
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

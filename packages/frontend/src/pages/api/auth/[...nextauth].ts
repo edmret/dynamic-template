@@ -13,7 +13,9 @@ const options = {
       authorize: async ({ username, password }: any): Promise<any> => {
         try {
           const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+            `${
+              process.env.PRIVATE_API_URL ?? "http://localhost:3001"
+            }/auth/login`,
             {
               username: username,
               password: password,
