@@ -6,15 +6,21 @@ services:
       dockerfile: backend.dockerfile
     ports:
       - '3001:3001'
-    command: sh -c "sleep 10 && npm run data-seed && npm run start:prod"
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/${DATABASE_NAME}
+      - JWT_SECRET
+    command: sh -c "sleep 10 && npm run data-seed && npm run start"
     depends_on:
       - mongo
-  # frontend:
-  #   build:
-  #     context: .
-  #     dockerfile: frontend.dockerfile
-  #   ports:
-  #     - '3000:3000'
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - NEXTAUTH_SECRET
   mongo:
     image: mongo
     ports:

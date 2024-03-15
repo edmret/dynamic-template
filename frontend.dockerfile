@@ -1,4 +1,4 @@
-FROM node:18.16-alpine3.18
+FROM node:18.19-alpine3.18
 
 WORKDIR /app
 
@@ -10,9 +10,9 @@ WORKDIR /app
 
 COPY . .
 
-WORKDIR /app/packages/notification-test-front
+WORKDIR /app/packages/frontend
 
-RUN npm i
+RUN npm ci
 RUN npm run build
 
 CMD ["npm", "start"]

@@ -53,7 +53,7 @@ const TemplatesList = ({
             borderRight: "1px solid divider",
           }}
         >
-          {templates.map((template, index, arr) => (
+          {templates?.map((template, index, arr) => (
             <ListItem
               button
               key={template._id}
